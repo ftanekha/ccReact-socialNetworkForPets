@@ -18,23 +18,33 @@ export class Profile extends React.Component {
         });
     }
     render() {
-        //isLoading should only be true when this.state.userData === null
         let isLoading = this.state.userData === null ? true : false,
-
-        className = 'Profile'
+        name,
+        className = 'Profile',
+        bio,
+        friends = [];
+        //display the user’s name, bio & friends
         if (isLoading) {
+            name = 'Loading...'
             className += ' loading'
+            bio = 'Loading bio...'
+        }else{
+            name = this.state.userData.name
+            bio = this.state.userData.bio
+            friends = this.state.userData.friends
         }
 
         return (
         <div className={className}>
-            <div className="profile-picture"></div>
-            <div className="profile-body">
-                <h2>Name goes here</h2>
+            <div className='profile-picture'>
+            { !isLoading && <img src={this.state.userData.profilePictureUrl} alt='' /> }
+            </div>
+            <div className='profile-body'>
+                <h2>{name}</h2>
                 <h3>@{this.props.username}</h3>
-                <p>Bio goes here</p>
+                <p>{bio}</p>
                 <h3>My friends</h3>
-                <Userlist usernames={[]} onChoose={this.props.onChoose} />
+                <Userlist usernames={friends} onChoose={this.props.onChoose} />
             </div>
         </div>
         );
