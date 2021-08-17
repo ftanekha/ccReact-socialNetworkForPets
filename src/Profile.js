@@ -3,10 +3,25 @@ import { fetchUserData, cancelFetch } from './dataFetcher';
 import { Userlist } from './Userlist';
 
 export class Profile extends React.Component {
-    render() {
+    // first thing we’ll want to do is load user data into the component’s state
+    constructor(props){
+        super(props)
+        this.state = { userData: null }
+    }
+    loadUserData(){
+        // set userData state to null while the data is loading
         const isLoading = true
+        if(isLoading) this.setState({ userData: null })
+        //fetchUserData (simulates real user data) 
+        this.fetchID = fetchUserData(this.props.username, (userData) => {
+            this.setState({ userData });
+        });
+    }
+    render() {
+        //isLoading should only be true when this.state.userData === null
+        let isLoading = this.state.userData === null ? true : false,
 
-        let className = 'Profile'
+        className = 'Profile'
         if (isLoading) {
             className += ' loading'
         }
@@ -23,5 +38,9 @@ export class Profile extends React.Component {
             </div>
         </div>
         );
+    }
+    //load user data when the component first mounts
+    componentDidMount(){
+        this.loadUserData()
     }
 }
