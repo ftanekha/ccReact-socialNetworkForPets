@@ -9,9 +9,6 @@ export class Profile extends React.Component {
         this.state = { userData: null }
     }
     loadUserData(){
-        // set userData state to null while the data is loading
-        const isLoading = true
-        if(isLoading) this.setState({ userData: null })
         //fetchUserData (simulates real user data) 
         this.fetchID = fetchUserData(this.props.username, (userData) => {
             this.setState({ userData });
