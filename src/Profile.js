@@ -53,4 +53,15 @@ export class Profile extends React.Component {
     componentDidMount(){
         this.loadUserData()
     }
+    //update
+    componentDidUpdate(prevProps){
+        if(this.props.username !== prevProps.username){
+            cancelFetch(this.fetchID); 
+            this.loadUserData();
+        }
+    }
+    //cleanup
+    componentWillUnmount(){
+        cancelFetch(this.fetchID)
+    }
 }
